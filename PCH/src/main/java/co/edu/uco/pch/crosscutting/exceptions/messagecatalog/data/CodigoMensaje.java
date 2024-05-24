@@ -1,7 +1,9 @@
 package co.edu.uco.pch.crosscutting.exceptions.messagecatalog.data;
 
-public enum CodigoMensaje {
+import static co.edu.uco.pch.crosscutting.helpers.TextHelper.concatenate;
+import static co.edu.uco.pch.crosscutting.helpers.TextHelper.UNDERLINE;
 
+public enum CodigoMensaje {
 	
 	M00001(TipoMensaje.TECNICO, CategoriaMensaje.ERROR, "00001", true),
 	M00002(TipoMensaje.USUARIO, CategoriaMensaje.ERROR, "00002", true),
@@ -30,11 +32,6 @@ public enum CodigoMensaje {
 	private CategoriaMensaje categoria;
 	private String codigo;
 	private boolean base;
-
-	private CodigoMensaje(final TipoMensaje tipo, final CategoriaMensaje categoria, final String codigo,
-			final boolean base) {
-		
-	}
 	
 	private CodigoMensaje(final TipoMensaje tipo, final CategoriaMensaje categoria, 
 			final String codigo, final boolean base) {
@@ -42,24 +39,11 @@ public enum CodigoMensaje {
 		setCategoria(categoria);
 		setCodigo(codigo);
 		setBase(base);
+
 	}
 
-	// getters
-
-	public final TipoMensaje getTipo() {
-		return tipo;
-	}
-
-	public final CategoriaMensaje getCategoria() {
-		return categoria;
-	}
-	
 	public final boolean isBase() {
 		return base;
-	}
-
-	public final String getCodigo() {
-		return codigo;
 	}
 	public final TipoMensaje getTipo() {
 		return tipo;
@@ -69,19 +53,10 @@ public enum CodigoMensaje {
 		this.tipo = tipo;
 	}
 
-	public final boolean isBase() {
-		return base;
-	}
-
-	public String getIdentificador() {
-		return concatenate(getTipo().name(), UNDERLINE, getCategoria().toString(), UNDERLINE, getCodigo());
-	}
-	
 	public final CategoriaMensaje getCategoria() {
 		return categoria;
 	}
 
-	// setters
 	private final void setCategoria(final CategoriaMensaje categoria) {
 		this.categoria = categoria;
 	}
@@ -93,21 +68,18 @@ public enum CodigoMensaje {
 	private final void setCodigo(final String codigo) {
 		this.codigo = codigo;
 	}
-
 	
 	private final void setBase(boolean base) {
 		this.base = base;
 	}
-
-
+	
 	public final String getIdentificador() {
 		return concatenate(getTipo().name(),UNDERLINE,
 				getCategoria().name(),UNDERLINE, getCodigo());
 	}
-
+	
 	public static void main(String[] args) {
 		System.out.println(M00001.getIdentificador());
 	}
-}
-
+	
 }

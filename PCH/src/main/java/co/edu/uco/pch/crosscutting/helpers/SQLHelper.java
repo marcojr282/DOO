@@ -1,5 +1,6 @@
 package co.edu.uco.pch.crosscutting.helpers;
 
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -145,5 +146,7 @@ public final class SQLHelper {
 
 			throw new CrosscuttingPCHException(mensajeTecnico, mensajeUsuario, exception);
 		}
+		
+
 	}
 }

@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import co.edu.uco.pch.crosscutting.exceptions.custom.DataPCHException;
 import co.edu.uco.pch.data.dao.entity.CiudadDAO;
+import co.edu.uco.pch.data.dao.entity.concrete.SqlConnection;
 import co.edu.uco.pch.entity.CiudadEntity;
 
 public final class CiudadAzureSqlDAO extends SqlConnection  implements CiudadDAO{
