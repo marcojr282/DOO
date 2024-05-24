@@ -26,8 +26,7 @@ public final class AzureSQLDAOFactory extends SqlConnection implements DAOFactor
 		abrirConexion();
 	}
 
-	@Override
-	public void abrirConexion() {
+	private void abrirConexion() {
 		final String connectionUrl = "jdbc:sqlserver://wednesday.database.windows.net:1433;databaseName=friday;user=fridayDmlUser;password=fr1d4yus3r!";
 		try {
 			setConnection(DriverManager.getConnection(connectionUrl));
@@ -42,7 +41,6 @@ public final class AzureSQLDAOFactory extends SqlConnection implements DAOFactor
 
 			throw new DataPCHException(mensajeTecnico, mensajeUsuario, excepcion);
 		}
-
 	}
 
 	@Override
@@ -79,7 +77,7 @@ public final class AzureSQLDAOFactory extends SqlConnection implements DAOFactor
 	public CiudadDAO getCiudadDAO() {
 		return new CiudadAzureSqlDAO(getConnection());
 	}
-	
+
 	public static void main(String[] args) {
 		try {
 			DAOFactory factory = DAOFactory.getFactory();
@@ -113,7 +111,5 @@ public final class AzureSQLDAOFactory extends SqlConnection implements DAOFactor
 		} catch (final Exception excepcion) {
 			excepcion.printStackTrace();
 		}
-		
 	}
-
 }

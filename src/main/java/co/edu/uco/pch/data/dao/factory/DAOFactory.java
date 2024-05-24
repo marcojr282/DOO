@@ -11,8 +11,6 @@ public interface DAOFactory {
 		return new AzureSQLDAOFactory();
 	}
 
-	void abrirConexion();
-
 	void cerrarConexion();
 
 	void iniciarTransaccion();
