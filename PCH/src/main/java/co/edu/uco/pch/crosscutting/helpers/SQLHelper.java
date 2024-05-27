@@ -1,12 +1,13 @@
 package co.edu.uco.pch.crosscutting.helpers;
 
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import co.edu.uco.pch.crosscutting.exceptions.custom.CrosscuttingPCHException;
+import co.edu.uco.pch.crosscutting.exceptions.customs.CrosscuttingPCHException;
 import co.edu.uco.pch.crosscutting.exceptions.messagecatalog.MessageCatalogStrategy;
 import co.edu.uco.pch.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
+
+
 
 public final class SQLHelper {
 
@@ -146,7 +147,6 @@ public final class SQLHelper {
 
 			throw new CrosscuttingPCHException(mensajeTecnico, mensajeUsuario, exception);
 		}
-		
-
 	}
 }
+

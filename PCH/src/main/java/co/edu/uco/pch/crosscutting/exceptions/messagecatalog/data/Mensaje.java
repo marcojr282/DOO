@@ -4,6 +4,7 @@ public final class Mensaje {
 	
 	private CodigoMensaje codigo;
 	private String contenido;
+
 	
 	public Mensaje(final CodigoMensaje codigo ,final  String contenido) {
 		setCodigo(codigo);
@@ -14,9 +15,13 @@ public final class Mensaje {
 	public final boolean esBase() {
 		return getCodigo().isBase();
 	}
+
+
 	private final CodigoMensaje getCodigo() {
 		return codigo;
 	}
+
+
 	public final CategoriaMensaje getCategoria() {
 		return getCodigo().getCategoria();
 	}
@@ -26,9 +31,12 @@ public final class Mensaje {
 		return getCodigo().getTipo();
 	}
 
+
 	public final String getContenido() {
 		return contenido;
 	}
+
+
 	private final void setCodigo(final CodigoMensaje codigo) {
 		this.codigo = codigo;
 	}
@@ -41,4 +49,5 @@ public final class Mensaje {
 	}
 	
 	
+
 }

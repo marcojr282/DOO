@@ -1,6 +1,6 @@
 package co.edu.uco.pch.data.dao.entity;
 
-public interface UpdateDAO<E> {
+ interface UpdateDAO<E> {
+	void modificar (E data);
 
-	void modificar(E data);
 }

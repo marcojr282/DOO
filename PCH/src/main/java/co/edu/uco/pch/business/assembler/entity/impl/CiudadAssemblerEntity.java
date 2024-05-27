@@ -3,7 +3,14 @@ package co.edu.uco.pch.business.assembler.entity.impl;
 import co.edu.uco.pch.business.assembler.entity.AssemblerEntity;
 import co.edu.uco.pch.business.domain.CiudadDomain;
 import co.edu.uco.pch.business.domain.DepartamentoDomain;
+import co.edu.uco.pch.crosscutting.helpers.ObjectHelper;
+
 import static co.edu.uco.pch.crosscutting.helpers.ObjectHelper.getObjectHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import co.edu.uco.pch.entity.CiudadEntity;
 import co.edu.uco.pch.entity.DepartamentoEntity;
 
@@ -12,7 +19,7 @@ public class CiudadAssemblerEntity implements AssemblerEntity<CiudadDomain, Ciud
 
 	private static final AssemblerEntity<DepartamentoDomain, DepartamentoEntity> departamentoAssembler = DepartamentoAssemblerEntity.getInstance();
 	private static final AssemblerEntity<CiudadDomain, CiudadEntity> instance = new CiudadAssemblerEntity();
-
+	
 	private CiudadAssemblerEntity() {
 		super();
 	}
@@ -34,6 +41,12 @@ public class CiudadAssemblerEntity implements AssemblerEntity<CiudadDomain, Ciud
 		return CiudadEntity.build().setId(ciudadDomainTmp.getId()).setNombre(ciudadDomainTmp.getNombre()).setDepartamento(departamentoEntity);
 	}
 
-
+	@Override
+	public final List<CiudadDomain> toDomainCollection( final List<CiudadEntity> entityCollection) {
+		var entityCollectionTmp = ObjectHelper.getObjectHelper().getDefaultValue(entityCollection, new ArrayList<CiudadEntity>());
+		return entityCollectionTmp.stream().map(this::toDomain).toList();
+	}
+	
+	
 
 }

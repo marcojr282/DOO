@@ -46,11 +46,5 @@ public class PCHException extends RuntimeException{
 	public final Lugar getLugar() {
 		return lugar;
 	}
-
-
-
-
-
-
-
+		
 }

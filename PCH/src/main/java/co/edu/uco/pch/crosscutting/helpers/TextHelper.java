@@ -3,7 +3,7 @@ package co.edu.uco.pch.crosscutting.helpers;
 public final class TextHelper {
 	
 	public static final String EMPTY = "";
-	public static final String UNDERLINE = " ";
+	public static final String UNDERLINE = "_";
 	
 	private TextHelper() {
 		super();
@@ -18,27 +18,26 @@ public final class TextHelper {
 	}
 	
 	public static final String getDefaultValue(final String string ,final String defaultValue) {
-		return ObjectHelper.getObjectHelper().getDefaultValue(string, defaultValue);
+		return ObjectHelper.getObjectHelper().getDefaultValue(string, null);
 	}
 	
 	public static final String getDefaultValue(final String string) {
-		return getDefaultValue(string, EMPTY);
+		return getDefaultValue(string,EMPTY);
 	}
 	
 	public static final String applyTrim(final String string) {
 		return getDefaultValue(string).trim();
 	}
 	
-	public static final String concatenate(String...strings) {
+	public static final String concatenate(String ...strings ) {
+		final var sb = new StringBuilder(EMPTY);
 		
-		final StringBuilder sb = new StringBuilder(EMPTY);
-		if(!ObjectHelper.getObjectHelper().isNull(strings)) {
-			for( final var string : strings) {
+		if (!ObjectHelper.getObjectHelper().isNull(strings)) {
+			for (final var string : strings) {
 				sb.append(applyTrim(string));
 			}
+			
 		}
-		
 		return sb.toString();
-		}
-	
+	}
 }

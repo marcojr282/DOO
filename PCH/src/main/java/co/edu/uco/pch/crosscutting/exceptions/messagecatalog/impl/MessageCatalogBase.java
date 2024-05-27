@@ -2,14 +2,17 @@ package co.edu.uco.pch.crosscutting.exceptions.messagecatalog.impl;
 
 import java.util.HashMap;
 import java.util.Map;
-import co.edu.uco.pch.crosscutting.exceptions.custom.CrosscuttingPCHException;
+
+import co.edu.uco.pch.crosscutting.exceptions.customs.CrosscuttingPCHException;
 import co.edu.uco.pch.crosscutting.exceptions.messagecatalog.MessageCatalog;
 import co.edu.uco.pch.crosscutting.exceptions.messagecatalog.data.CodigoMensaje;
 import co.edu.uco.pch.crosscutting.exceptions.messagecatalog.data.Mensaje;
 import co.edu.uco.pch.crosscutting.helpers.ObjectHelper;
+
 public final class MessageCatalogBase implements MessageCatalog {
 	
 	private final Map<String,Mensaje> mensajes = new HashMap<>();
+
 	@Override
 	public final void inicializar() {
 		mensajes.clear();
@@ -58,7 +61,6 @@ public final class MessageCatalogBase implements MessageCatalog {
 				"Se ha presentado un problema tratando de iniciar una transacción SQL con la fuente de información deseada..."));
 		mensajes.put(CodigoMensaje.M00022.getIdentificador(), new Mensaje(CodigoMensaje.M00022,
 				"Se ha presentado un problema INESPERADO tratando de iniciar una transacción SQL con la fuente de información deseada..."));
-
 		mensajes.put(CodigoMensaje.M00023.getIdentificador(),new Mensaje(CodigoMensaje.M00023,
 				"se ha presentado un prblema tratando de crear la ciudad \"${1}\" y si el problemas contacte a el administrador ..." ));
 	}
@@ -68,6 +70,7 @@ public final class MessageCatalogBase implements MessageCatalog {
 		// TODO Auto-generated method stub
 		return obtenerMensaje(codigo, parametros).getContenido();
 	}
+
 	@Override
 	public final Mensaje obtenerMensaje(final CodigoMensaje codigo,final  String... parametros) {
 		if (ObjectHelper.getObjectHelper().isNull(codigo)) {
@@ -91,5 +94,7 @@ public final class MessageCatalogBase implements MessageCatalog {
 		// TODO: tarea: asegure que si tiene parametros, el contenido del mensaje se retorne  con los parametros reemplazados 
 		return mensajes.get(codigo.getIdentificador());
 	}
+
 	
+
 }
