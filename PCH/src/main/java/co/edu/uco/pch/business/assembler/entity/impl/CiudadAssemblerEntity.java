@@ -9,7 +9,6 @@ import static co.edu.uco.pch.crosscutting.helpers.ObjectHelper.getObjectHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import co.edu.uco.pch.entity.CiudadEntity;
 import co.edu.uco.pch.entity.DepartamentoEntity;
@@ -42,10 +41,22 @@ public class CiudadAssemblerEntity implements AssemblerEntity<CiudadDomain, Ciud
 	}
 
 	@Override
-	public final List<CiudadDomain> toDomainCollection( final List<CiudadEntity> entityCollection) {
-		var entityCollectionTmp = ObjectHelper.getObjectHelper().getDefaultValue(entityCollection, new ArrayList<CiudadEntity>());
+	public List<CiudadDomain> toDomainCollection(List<CiudadEntity> entityCollection) {
+		var entityCollectionTmp = ObjectHelper.getObjectHelper().getDefaultValue(entityCollection,
+				new ArrayList<CiudadEntity>());
+
 		return entityCollectionTmp.stream().map(this::toDomain).toList();
+		
 	}
+
+	@Override
+	public List<CiudadEntity> toEntityCollection(List<CiudadDomain> domainCollection) {
+		var domainCollectionTmp = ObjectHelper.getObjectHelper().getDefaultValue(domainCollection,
+				new ArrayList<CiudadDomain>());
+		return domainCollectionTmp.stream().map(this::toEntity).toList();
+	}
+	
+
 	
 	
 

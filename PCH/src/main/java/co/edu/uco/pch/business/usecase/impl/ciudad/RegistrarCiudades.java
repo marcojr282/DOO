@@ -8,14 +8,18 @@ import co.edu.uco.pch.business.domain.CiudadDomain;
 import co.edu.uco.pch.business.usecase.UseCaseWithoutReturn;
 import co.edu.uco.pch.crosscutting.exceptions.customs.BusinessPCHException;
 import co.edu.uco.pch.crosscutting.helpers.ObjectHelper;
+import co.edu.uco.pch.crosscutting.helpers.TextHelper;
 import co.edu.uco.pch.crosscutting.helpers.UUIDHelper;
 import co.edu.uco.pch.data.dao.factory.DAOFactory;
 import co.edu.uco.pch.entity.CiudadEntity;
 import co.edu.uco.pch.entity.DepartamentoEntity;
 
+
+
 public final class RegistrarCiudades implements UseCaseWithoutReturn<CiudadDomain>{
 
 	private DAOFactory factory;
+	private static final int MAX_LENGTH_NOMBRE_CIUDAD = 50;
 	
 	public RegistrarCiudades(final DAOFactory factory) {
 		if (ObjectHelper.getObjectHelper().isNull(factory)) {
@@ -31,6 +35,8 @@ public final class RegistrarCiudades implements UseCaseWithoutReturn<CiudadDomai
 	public void execute(final CiudadDomain data) {
 		// validar que los datos requwridos por el caso de uso sean correctos
 		//a nivel de tipo de dato, longitud,obligatoriedad,formato,rango
+		validarDatos(data);
+		
 		
 		
 		// validar que no exista otra ciudad con el mismo nombre y departamento
@@ -50,11 +56,12 @@ public final class RegistrarCiudades implements UseCaseWithoutReturn<CiudadDomai
 	private final UUID generarIdentificadorCiudad() {
 		UUID id = UUIDHelper.generate();
 		boolean existeId = true;
+
 		while (existeId) {
 			id = UUIDHelper.generate();
 			var ciudadEntity = CiudadEntity.build().setId(id);
-		var resultados = factory.getCiudadDAO().consultar(null);
-		existeId = !resultados.isEmpty();
+			var resultados = factory.getCiudadDAO().consultar(ciudadEntity);
+			existeId = !resultados.isEmpty();
 		}
 		return id;
 	}
@@ -64,10 +71,35 @@ public final class RegistrarCiudades implements UseCaseWithoutReturn<CiudadDomai
 		var resultados = factory.getCiudadDAO().consultar(ciudadEntity);
 		if (!resultados.isEmpty()){
 			var mensajeUsuario = "ya existe una ciudad con el nombre \"${1}\"asociado al departamento";
-			throw new BusinessPCHException(mensajeUsuario);
+			throw new BusinessPCHException(mensajeUsuario);}
 			
 		}
+		
+	private void validarDatos(final CiudadDomain data) {
+
+			if (TextHelper.isNull(data.getNombre())) {
+				throw new BusinessPCHException("El nombre de la ciudad es obligatorio.");
+			}
+
+			if (ObjectHelper.getObjectHelper().isNull(data.getDepartamento())) {
+				throw new BusinessPCHException("El departamento es obligatorio.");
+			}
+
+			if (data.getNombre().length() > MAX_LENGTH_NOMBRE_CIUDAD) {
+				throw new BusinessPCHException("El nombre de la ciudad excede la longitud máxima permitida.");
+			}
+
+			if (!isValidCityNameFormat(data.getNombre())) {
+				throw new BusinessPCHException("El formato del nombre de la ciudad es incorrecto.");
+			}
+		}
+
+		private boolean isValidCityNameFormat(String nombre) {
+
+			return nombre.matches("[a-zA-Z]+");
 	}
+	
+
 	
 
 		

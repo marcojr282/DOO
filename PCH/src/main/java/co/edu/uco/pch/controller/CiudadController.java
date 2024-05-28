@@ -1,6 +1,5 @@
 package co.edu.uco.pch.controller;
 
-
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -20,119 +19,136 @@ import co.edu.uco.pch.crosscutting.exceptions.PCHException;
 import co.edu.uco.pch.dto.CiudadDTO;
 
 @RestController
-@RequestMapping("/api/v1/ciudades")
-public class CiudadController {
+@RequestMapping("/api/V1/ciudades")
+public final class CiudadController {
 	
-	@GetMapping
+	
+
+
+	@GetMapping("/dummy")
 	public CiudadDTO dummy() {
 		return CiudadDTO.build();
 	}
 	
-	
-	
 	@GetMapping
 	public ResponseEntity<CiudadResponse> consultar(){
+		
 		var httpStatusCode = HttpStatus.ACCEPTED;
 		var ciudadResponse = new CiudadResponse();
+		
 		try {
-			var ciudadDto = CiudadDTO.build();			
+			var ciudadDto = CiudadDTO.build();
 			var facade = new ConsultarCiudadesFacade();
 			
-			ciudadResponse.setDatos(facade.excute(ciudadDto));
-			ciudadResponse.getMensajes().add("Ciudades consultadas exitosamente");
+			ciudadResponse.setDatos(facade.execute(ciudadDto));
+			ciudadResponse.getMensajes().add("ciudades consultadas exitosamente");
 			
-		}catch (final PCHException excepcion) {
+		}catch(final PCHException excepcion) {
 			httpStatusCode = HttpStatus.BAD_REQUEST;
-			ciudadResponse.getMensajes().add(excepcion.getMensajeUsuario());			
-		}catch ( final Exception excepcion) {
+			ciudadResponse.getMensajes().add(excepcion.getMensajeUsuario());
+			excepcion.printStackTrace();
+		}catch(final Exception excepcion) {
 			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 			
-			var mensajeUsuario = "Se ha presentado un problema tratando de consultar la informacion de la ciudades...";
+			var mensajeUsuario = "se ha presentado un prblema tratando de consultar";
 			ciudadResponse.getMensajes().add(mensajeUsuario);
 			
 			excepcion.printStackTrace();
 		}
 		
-		return new ResponseEntity<>(ciudadResponse, httpStatusCode);
+		return new ResponseEntity<>(ciudadResponse,httpStatusCode);
+		
+		
 	}
-	
-	@PostMapping
-	public ResponseEntity<CiudadResponse> crear(@RequestBody CiudadDTO ciudad){
+@PostMapping	
+public ResponseEntity<CiudadResponse> crear(@RequestBody CiudadDTO ciudad){
+		
 		var httpStatusCode = HttpStatus.ACCEPTED;
 		var ciudadResponse = new CiudadResponse();
+		
 		try {
-			
 			var facade = new RegistrarCiudadesFacade();
-			
 			facade.execute(ciudad);
-			ciudadResponse.getMensajes().add("Ciudades creada exitosamente");
+			ciudadResponse.getMensajes().add("ciudades creada exitosamente");
 			
-		}catch (final PCHException excepcion) {
+		}catch(final PCHException excepcion) {
 			httpStatusCode = HttpStatus.BAD_REQUEST;
-			ciudadResponse.getMensajes().add(excepcion.getMensajeUsuario());			
-		}catch ( final Exception excepcion) {
+			ciudadResponse.getMensajes().add(excepcion.getMensajeUsuario());
+			excepcion.printStackTrace();
+		}catch(final Exception excepcion) {
 			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 			
-			var mensajeUsuario = "Se ha presentado un problema tratando de registrar la informacion de la ciudades...";
+			var mensajeUsuario = "se ha presentado un prblema tratando de registar la nueva ciudad";
 			ciudadResponse.getMensajes().add(mensajeUsuario);
 			
 			excepcion.printStackTrace();
 		}
 		
-		return new ResponseEntity<>(ciudadResponse, httpStatusCode);
+		return new ResponseEntity<>(ciudadResponse,httpStatusCode);
+		
+		
 	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<CiudadResponse> eliminar(@PathVariable UUID id){
+
+
+@DeleteMapping("/{id}")	
+public ResponseEntity<CiudadResponse> eliminar(@PathVariable UUID  id){
+		
 		var httpStatusCode = HttpStatus.ACCEPTED;
 		var ciudadResponse = new CiudadResponse();
+		
 		try {
-			
-			
-			
-			//var facade = new RegistrarCiudadesFacade();
-			
+			//var facade = new EliminarCiudadFacade();
 			//facade.execute(id);
-			ciudadResponse.getMensajes().add("Ciudades creada exitosamente");
+			ciudadResponse.getMensajes().add("ciudades eliminadas exitosamente");
 			
-		}catch (final PCHException excepcion) {
+		}catch(final PCHException excepcion) {
 			httpStatusCode = HttpStatus.BAD_REQUEST;
-			ciudadResponse.getMensajes().add(excepcion.getMensajeUsuario());			
-		}catch ( final Exception excepcion) {
+			ciudadResponse.getMensajes().add(excepcion.getMensajeUsuario());
+			excepcion.printStackTrace();
+		}catch(final Exception excepcion) {
 			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 			
-			var mensajeUsuario = "Se ha presentado un problema tratando de eliminar la informacion de la ciudades...";
+			var mensajeUsuario = "se ha presentado un prblema tratando de eliminar la nueva ciudad";
 			ciudadResponse.getMensajes().add(mensajeUsuario);
 			
 			excepcion.printStackTrace();
 		}
 		
-		return new ResponseEntity<>(ciudadResponse, httpStatusCode);
+		return new ResponseEntity<>(ciudadResponse,httpStatusCode);
+		
+		
+	}
+
+@PutMapping("/{id}")
+public ResponseEntity<CiudadResponse> modificar(@PathVariable UUID  id,@RequestBody CiudadDTO ciudadDTO){
+	
+	var httpStatusCode = HttpStatus.ACCEPTED;
+	var ciudadResponse = new CiudadResponse();
+	
+	try {
+		
+		ciudadDTO.setId(id);
+		//var facade = new EliminarCiudadFacade();
+		//facade.execute(id);
+		ciudadResponse.getMensajes().add("ciudades modificadas exitosamente");
+		
+	}catch(final PCHException excepcion) {
+		httpStatusCode = HttpStatus.BAD_REQUEST;
+		ciudadResponse.getMensajes().add(excepcion.getMensajeUsuario());
+		excepcion.printStackTrace();
+	}catch(final Exception excepcion) {
+		httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+		
+		var mensajeUsuario = "se ha presentado un prblema tratando de modificar la nueva ciudad";
+		ciudadResponse.getMensajes().add(mensajeUsuario);
+		
+		excepcion.printStackTrace();
 	}
 	
-	@PutMapping("/{id}")
-	public ResponseEntity<CiudadResponse> Modificar(@PathVariable UUID id, @RequestBody CiudadDTO ciudadDto){
-		var httpStatusCode = HttpStatus.ACCEPTED;
-		var ciudadResponse = new CiudadResponse();
-		try {
-			ciudadDto.setId(id);
-			//var facade = new RegistrarCiudadesFacade();
-			
-			//facade.execute(id);
-			ciudadResponse.getMensajes().add("Ciudades creada exitosamente");
-			
-		}catch (final PCHException excepcion) {
-			httpStatusCode = HttpStatus.BAD_REQUEST;
-			ciudadResponse.getMensajes().add(excepcion.getMensajeUsuario());			
-		}catch ( final Exception excepcion) {
-			httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-			
-			var mensajeUsuario = "Se ha presentado un problema tratando de modificar la informacion de la ciudades...";
-			ciudadResponse.getMensajes().add(mensajeUsuario);
-			
-			excepcion.printStackTrace();
-		}
-		
-		return new ResponseEntity<>(ciudadResponse, httpStatusCode);
-	}
+	return new ResponseEntity<>(ciudadResponse,httpStatusCode);
+	
+	
+}
+
+
 }

@@ -1,4 +1,5 @@
 package co.edu.uco.pch.dto;
+
 import java.util.UUID;
 
 import co.edu.uco.pch.crosscutting.helpers.TextHelper;
@@ -14,8 +15,6 @@ public final class CiudadDTO {
 		setId(UUIDHelper.getDefault());
 		setNombre(TextHelper.EMPTY);
 		setDepartamento(DepartamentoDTO.build());
-		
-		
 	}
 	
 	public CiudadDTO(final UUID id,final  String nombre, final DepartamentoDTO departamento) {

@@ -4,4 +4,6 @@ import co.edu.uco.pch.entity.DepartamentoEntity;
 
 public interface DepartamentoDAO extends RetrieveDAO<DepartamentoEntity>{
 
+	
+
 }

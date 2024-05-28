@@ -21,7 +21,7 @@ public final class ConsultarCiudadesFacade implements FacadeWithReturn<CiudadDTO
 	}
 		
 	@Override
-	public final List<CiudadDTO> excute(final CiudadDTO dto) {
+	public final List<CiudadDTO> execute(final CiudadDTO dto) {
 		try {
             var useCase = new ConsultarCiudades(daoFactory);
 			var ciudadDomain = CiudadAssemblerDTO.getInstance().toDomain(dto);
